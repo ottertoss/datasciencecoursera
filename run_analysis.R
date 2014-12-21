@@ -1,5 +1,8 @@
 run_analysis <- function(dataDir)
 {
+  ##To use the function, requires "dplyr" version "3.0.3" or above. 
+  ##Parameter 'dataDir' is where the 'UCI HAR Dataset' folder exists (i.e. run_analysis("./data/UCI HAR Dataset") )
+
   ##Ensure dplyr installed and correct version
   if (!require("dplyr",character.only = TRUE))
   {
@@ -53,5 +56,7 @@ run_analysis <- function(dataDir)
 
   ##Return completed summary data. 
   summaryData
-  ##write.table(test, file="summaryData.txt", row.name=FALSE, sep=" ")
+  
+  ##Comand to write table. 
+  ##write.table(test, file="summaryData.txt", row.name=FALSE, sep=" ", eol="\r\n")
 }
