@@ -11,28 +11,28 @@ run_analysis <- function(dataDir)
   ##First get all the URLs for the files required. 
   urlTestTextX <- paste(dataDir, "/test/X_test.txt", sep="")
   urlTrainTestX <- paste(dataDir, "/train/X_train.txt", sep="")
-  testXLabels <- paste(dataDir, "/features.txt", sep="")
+  featuresLabels <- paste(dataDir, "/features.txt", sep="")
   
   ##Read the main table data 
-  train <- read.table("./data/UCI HAR Dataset/train/X_train.txt")
-  test <- read.table("./data/UCI HAR Dataset/test/X_test.txt")
+  train <- read.table(urlTrainTestX)
+  test <- read.table(urlTestTextX)
   
   ##Add the column names from features.txt file. 
-  names(train) <- readLines("./data/UCI HAR Dataset/features.txt")
-  names(test) <- readLines("./data/UCI HAR Dataset/features.txt")
+  names(train) <- readLines(featuresLabels)
+  names(test) <- readLines(featuresLabels)
   
   ##Add the Subject column data from subject to each test and train data.
-  Subject <- readLines("./data/UCI HAR Dataset/train/subject_train.txt")
+  Subject <- readLines(paste(dataDir, "/train/subject_train.txt", sep=""))
   train <- cbind(train, Subject)
-  Subject <- readLines("./data/UCI HAR Dataset/test/subject_test.txt")
+  Subject <- readLines(paste(dataDir, "/test/subject_test.txt", sep=""))
   test <- cbind(test, Subject)
   
   ##Add the Activity values from the y data. 
-  ActivityLabels <- readLines("./data/UCI HAR Dataset/activity_labels.txt")
-  Activity <- readLines("./data/UCI HAR Dataset/train/y_train.txt")
+  ActivityLabels <- readLines(paste(dataDir, "/activity_labels.txt", sep=""))
+  Activity <- readLines(paste(dataDir, "/train/y_train.txt", sep=""))
   train <- cbind(train, Activity)
   train$Activity <- ActivityLabels[train$Activity]
-  Activity <- readLines("./data/UCI HAR Dataset/test/y_test.txt")
+  Activity <- readLines(paste(dataDir, "/test/y_test.txt", sep=""))
   test <- cbind(test, Activity)
   test$Activity <- ActivityLabels[test$Activity]
 
