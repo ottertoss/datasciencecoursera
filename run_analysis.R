@@ -1,7 +1,7 @@
-run_analysis <- function(dataDir)
+run_analysis <- function()
 {
   ##To use the function, requires "dplyr" version "3.0.3" or above. 
-  ##Parameter 'dataDir' is where the 'UCI HAR Dataset' folder exists (i.e. run_analysis("./data/UCI HAR Dataset") )
+  ##The 'UCI HAR Dataset' is in your working directory.
 
   ##Ensure dplyr installed and correct version
   if (!require("dplyr",character.only = TRUE))
@@ -12,9 +12,9 @@ run_analysis <- function(dataDir)
   }
   
   ##First get all the URLs for the files required. 
-  urlTestTextX <- paste(dataDir, "/test/X_test.txt", sep="")
-  urlTrainTestX <- paste(dataDir, "/train/X_train.txt", sep="")
-  featuresLabels <- paste(dataDir, "/features.txt", sep="")
+  urlTestTextX <- "./UCI HAR Dataset/test/X_test.txt"
+  urlTrainTestX <- "./UCI HAR Dataset/train/X_train.txt"
+  featuresLabels <- "./UCI HAR Dataset/features.txt"
   
   ##Read the main table data 
   train <- read.table(urlTrainTestX)
@@ -25,17 +25,17 @@ run_analysis <- function(dataDir)
   names(test) <- readLines(featuresLabels)
   
   ##Add the Subject column data from subject to each test and train data.
-  Subject <- readLines(paste(dataDir, "/train/subject_train.txt", sep=""))
+  Subject <- readLines("./UCI HAR Dataset/train/subject_train.txt")
   train <- cbind(train, Subject)
-  Subject <- readLines(paste(dataDir, "/test/subject_test.txt", sep=""))
+  Subject <- readLines("./UCI HAR Dataset/test/subject_test.txt")
   test <- cbind(test, Subject)
   
   ##Add the Activity values from the y data. 
-  ActivityLabels <- readLines(paste(dataDir, "/activity_labels.txt", sep=""))
-  Activity <- readLines(paste(dataDir, "/train/y_train.txt", sep=""))
+  ActivityLabels <- readLines("./UCI HAR Dataset/activity_labels.txt")
+  Activity <- readLines("./UCI HAR Dataset/train/y_train.txt")
   train <- cbind(train, Activity)
   train$Activity <- ActivityLabels[train$Activity]
-  Activity <- readLines(paste(dataDir, "/test/y_test.txt", sep=""))
+  Activity <- readLines("./UCI HAR Dataset/test/y_test.txt")
   test <- cbind(test, Activity)
   test$Activity <- ActivityLabels[test$Activity]
 
@@ -56,7 +56,5 @@ run_analysis <- function(dataDir)
 
   ##Return completed summary data. 
   summaryData
-  
-  ##Comand to write table. 
   ##write.table(test, file="summaryData.txt", row.name=FALSE, sep=" ", eol="\r\n")
 }
